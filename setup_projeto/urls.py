@@ -16,7 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from core.views import index, salvar_configuracao  # Aqui estamos importando a lógica que você colou no views.py
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-]
+    path('', index, name='index'),  # O caminho vazio '' indica que essa é a página inicial (Home)
+    path('salvar-config/', salvar_configuracao, name='salvar_config'), 
+]  
+

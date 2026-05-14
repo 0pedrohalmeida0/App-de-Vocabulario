@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <title>Configurações - Vocabulário</title>
+    <style>
+        /* CSS */
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: 'Inter', sans-serif;
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh; margin: 0;
+        }
+        .config-container {
+            background-color: #ffffff; padding: 40px; border-radius: 8px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border-top: 5px solid #1a2a6c; max-width: 450px; width: 100%; text-align: center;
+        }
+        h2 { font-family: 'Playfair Display', serif; color: #1a2a6c; margin-bottom: 20px; }
+        select {
+            width: 100%; padding: 12px; margin: 20px 0;
+            border: 2px solid #e1e8ed; border-radius: 6px;
+            font-size: 1rem; color: #2c3e50;
+        }
+        .btn-salvar {
+            width: 100%; padding: 15px; background-color: #1a2a6c;
+            color: white; border: none; border-radius: 6px;
+            font-weight: bold; cursor: pointer; transition: 0.3s;
+        }
+        .btn-salvar:hover { background-color: #d4af37; }
+    </style>
+</head>
+<body>
+    <div class="config-container">
+        <h2>Foco de Aprendizado</h2>
+        <p>Selecione o idioma das palavras que deseja ver na sua tela de bloqueio.</p>
+
+        <!-- Agora o Django encontrará a rota 'salvar_config' -->
+        <form action="{% url 'salvar_config' %}" method="POST">
+            {% csrf_token %}
+            
+            <label for="idioma" style="display:block; text-align:left; color:#1a2a6c; font-weight:bold;">Idioma:</label>
+            <select name="idioma" id="idioma">
+                <option value="pt-br">Português (Erudito)</option>
+                <option value="en-us">Inglês (Avançado)</option>
+                <option value="de-de">Alemão (Cultura)</option>
+            </select>
+
+            <button type="submit" class="btn-salvar">Confirmar e Começar</button>
+        </form>
+    </div>
+</body>
+</html>
