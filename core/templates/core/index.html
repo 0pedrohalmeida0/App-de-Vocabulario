@@ -3,52 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <title>Configurações - Vocabulário</title>
+    <title>Vocabulário Diário</title>
     <style>
-        /* CSS */
         body {
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             font-family: 'Inter', sans-serif;
             display: flex; justify-content: center; align-items: center;
-            height: 100vh; margin: 0;
+            min-height: 100vh; margin: 0; padding: 20px;
         }
-        .config-container {
-            background-color: #ffffff; padding: 40px; border-radius: 8px;
+        .main-container {
+            background-color: #ffffff; padding: 40px; border-radius: 12px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            border-top: 5px solid #1a2a6c; max-width: 450px; width: 100%; text-align: center;
+            border-top: 5px solid #1a2a6c; max-width: 500px; width: 100%; text-align: center;
         }
-        h2 { font-family: 'Playfair Display', serif; color: #1a2a6c; margin-bottom: 20px; }
+        
+        /* Área da Palavra */
+        .word-display { margin-bottom: 40px; padding-bottom: 30px; border-bottom: 1px solid #eee; }
+        .tag { color: #d4af37; font-weight: bold; font-size: 0.8rem; text-transform: uppercase; }
+        .word-title { font-family: 'Playfair Display', serif; color: #1a2a6c; font-size: 2.8rem; margin: 10px 0; }
+        .word-example { font-style: italic; color: #5d6d7e; font-size: 1.1rem; margin-bottom: 20px; display: block; }
+        .meaning-box { background: #f9fbfc; padding: 15px; border-radius: 6px; border-left: 4px solid #1a2a6c; text-align: left; }
+
+        /* Área do Formulário */
+        h3 { font-family: 'Playfair Display', serif; color: #1a2a6c; font-size: 1.2rem; }
         select {
-            width: 100%; padding: 12px; margin: 20px 0;
-            border: 2px solid #e1e8ed; border-radius: 6px;
-            font-size: 1rem; color: #2c3e50;
+            width: 100%; padding: 12px; margin: 15px 0;
+            border: 2px solid #e1e8ed; border-radius: 6px; font-size: 1rem;
         }
         .btn-salvar {
             width: 100%; padding: 15px; background-color: #1a2a6c;
             color: white; border: none; border-radius: 6px;
-            font-weight: bold; cursor: pointer; transition: 0.3s;
+            font-weight: bold; cursor: pointer; transition: 0.3s; text-transform: uppercase;
         }
         .btn-salvar:hover { background-color: #d4af37; }
     </style>
 </head>
 <body>
-    <div class="config-container">
-        <h2>Foco de Aprendizado</h2>
-        <p>Selecione o idioma das palavras que deseja ver na sua tela de bloqueio.</p>
 
-        <!-- Agora o Django encontrará a rota 'salvar_config' -->
+    <div class="main-container">
+        
+        <div class="word-display">
+            {% if palavra %}
+                <span class="tag">{{ palavra.idioma }}</span>
+                <h1 class="word-title">{{ palavra.termo }}</h1>
+                
+                {% if palavra.exemplo %}
+                    <span class="word-example">"{{ palavra.exemplo }}"</span>
+                {% endif %}
+
+                <div class="meaning-box">
+                    <strong style="color: #1a2a6c;">Significado:</strong><br>
+                    <span style="color: #2c3e50;">{{ palavra.significado }}</span>
+                </div>
+            {% else %}
+                <p>Escolha um idioma abaixo para começar.</p>
+            {% endif %}
+        </div>
+
         <form action="{% url 'salvar_config' %}" method="POST">
             {% csrf_token %}
-            
-            <label for="idioma" style="display:block; text-align:left; color:#1a2a6c; font-weight:bold;">Idioma:</label>
+            <h3>Foco de Estudo</h3>
             <select name="idioma" id="idioma">
-                <option value="pt-br">Português (Erudito)</option>
-                <option value="en-us">Inglês (Avançado)</option>
-                <option value="de-de">Alemão (Cultura)</option>
+                <option value="pt-br" {% if idioma_selecionado == 'pt-br' %}selected{% endif %}>Português (Erudito)</option>
+                <option value="en-us" {% if idioma_selecionado == 'en-us' %}selected{% endif %}>Inglês (Avançado)</option>
+                <option value="de-de" {% if idioma_selecionado == 'de-de' %}selected{% endif %}>Alemão (Cultura)</option>
             </select>
-
-            <button type="submit" class="btn-salvar">Confirmar e Começar</button>
+            <button type="submit" class="btn-salvar">Trocar Idioma</button>
         </form>
+
     </div>
+
 </body>
 </html>
