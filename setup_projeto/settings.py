@@ -131,3 +131,7 @@ STATIC_URL = 'static/'
 # Faz a sessão durar mesmo se o navegador for fechado 
 SESSION_COOKIE_AGE = 31536000 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+STATIC_URL = 'static/'
+# Isso diz ao Django para procurar arquivos dentro das pastas static das apps
+STATICFILES_DIRS = []

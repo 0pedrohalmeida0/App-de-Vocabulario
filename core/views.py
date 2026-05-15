@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Palavra
 from datetime import datetime
+from django.http import JsonResponse
 
 def index(request):
     # --- NOVIDADE: Busca qual idioma foi salvo na sessão ---
@@ -40,3 +41,25 @@ def salvar_configuracao(request):
         
         print(f"O usuário escolheu e salvamos na sessão: {idioma_escolhido}")
         return redirect('index')
+    
+def api_palavra_do_dia(request):
+    # Mesma lógica que você já validou
+    idioma = request.session.get('idioma_foco', 'pt-br')
+    palavras = Palavra.objects.filter(idioma=idioma)
+    
+    dia_do_ano = datetime.now().timetuple().tm_yday
+    palavra = None
+    
+    if palavras.count() > 0:
+        palavra = palavras[dia_do_ano % palavras.count()]
+        
+        # Retornamos apenas os dados, sem HTML
+        dados = {
+            'termo': palavra.termo,
+            'significado': palavra.significado,
+            'exemplo': palavra.exemplo,
+            'idioma': palavra.idioma
+        }
+        return JsonResponse(dados)
+    
+    return JsonResponse({'erro': 'Nenhuma palavra encontrada'}, status=404)

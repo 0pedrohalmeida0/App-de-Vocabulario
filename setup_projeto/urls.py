@@ -16,11 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from core.views import index, salvar_configuracao  # Aqui estamos importando a lógica que você colou no views.py
+from core.views import index, salvar_configuracao
+from django.views.generic import TemplateView
+from core.views import api_palavra_do_dia
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),  # O caminho vazio '' indica que essa é a página inicial (Home)
     path('salvar-config/', salvar_configuracao, name='salvar_config'), 
+    path('sw.js', TemplateView.as_view(template_name="core/sw.js", content_type='application/javascript'), name='sw.js'),
+    path('api/palavra/', api_palavra_do_dia, name='api_palavra'),
 ]  
 

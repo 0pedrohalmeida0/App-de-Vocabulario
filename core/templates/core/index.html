@@ -1,9 +1,26 @@
-<!DOCTYPE html>
+{% load static %} <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <title>Vocabulário Diário</title>
+    <link rel="manifest" href="{% static 'core/manifest.json' %}">
+    
+    <script>
+      if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register("/sw.js") 
+      .then(() => console.log("PWA Ativo!"))
+      .catch((err) => console.log("Erro no PWA:", err));
+}
+// Pede permissão para mostrar notificações
+Notification.requestPermission().then(permission => {
+    if (permission === 'granted') {
+        console.log('Permissão concedida! As palavras aparecerão na tela.');
+    } else {
+        console.log('Permissão negada pelo usuário.');
+    }
+});
+    </script>
     <style>
         body {
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -37,6 +54,19 @@
         }
         .btn-salvar:hover { background-color: #d4af37; }
     </style>
+    <link rel="manifest" href="/static/manifest.json">
+
+<meta name="theme-color" content="#1a2a6c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<script>
+  // Registra o Service Worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/static/sw.js')
+      .then(() => console.log("PWA Ativo!"))
+      .catch((err) => console.log("Erro no PWA:", err));
+  }
+</script>
 </head>
 <body>
 
