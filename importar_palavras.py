@@ -22,7 +22,7 @@ def importar_do_txt(caminho_arquivo):
             if len(partes) == 4:
                 termo, significado, exemplo, idioma = partes
                 
-                # Agora incluímos o idioma no critério de busca
+                
                 obj, created = Palavra.objects.get_or_create(
                     termo=termo,
                     idioma=idioma, # O idioma entra aqui para diferenciar a busca
