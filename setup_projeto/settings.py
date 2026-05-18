@@ -22,7 +22,7 @@ load_dotenv(BASE_DIR / '.env')
 SECRET_KEY = 'django-insecure-)+wk!0orc&zn)t8i)if41wpp5pv-xm0dfr3gh&_d!(gc_7on_x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True 
+DEBUG = False
 
 # CONFIGURAÇÃO DOS HOSTS AUTORIZADOS
 ALLOWED_HOSTS = ['.pythonanywhere.com', 'pedroalmeida.pythonanywhere.com', '127.0.0.1', 'localhost']
